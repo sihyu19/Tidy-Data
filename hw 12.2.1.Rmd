@@ -1,0 +1,25 @@
+---
+title: "hw12.2.1"
+author: "siyu"
+date: "2023-02-17"
+output: html_document
+---
+```{r}
+library(tidyverse)
+table1
+table2
+table3
+table4a
+table4b
+```
+
+```{r}
+filter(table2, type=="cases")%>%
+  rename(cases = count)
+
+filter(table2, type=="population")%>%
+  rename(population = count)
+
+#table2%>%
+ # mutate(rate = cases/population * 10000)
+```
