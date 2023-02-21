@@ -1,0 +1,66 @@
+---
+title: "hw 12.3.3"
+author: "siyu"
+date: "2023-02-21"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+tidy4a <- table4a %>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
+
+tidy4b <- table4b%>%
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
+  
+left_join(tidy4a, tidy4b)
+```
+
+```{r}
+table2 
+
+table2 %>%
+  pivot_wider(names_from = type, values_from = count)
+```
+
+2. 
+the code fails because 1999 and 2000 are not non-syntactic variable names. They should be changed to `1999` and `2000`. 
+```{r}
+#table4a %>% 
+#  pivot_longer(c(1999, 2000), names_to = "year", values_to = "cases")
+```
+
+3. 
+I am not sure how to change this. 
+
+```{r}
+people <- tribble(
+  ~name,             ~names,  ~values,
+  #-----------------|--------|------
+  "Phillip Woods",   "age",       45,
+  "Phillip Woods",   "height",   186,
+  "Phillip Woods",   "age",       50,
+  "Jessica Cordero", "age",       37,
+  "Jessica Cordero", "height",   156
+)
+people
+
+people %>%
+  pivot_wider(names_from = "names", values_from = "values")
+```
+
+4. 
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+preg
+
+preg%>%
+  pivot_longer(c(male, female), names_to = "sex", values_to = "cases")
+```
