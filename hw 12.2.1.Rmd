@@ -12,14 +12,47 @@ table3
 table4a
 table4b
 ```
-
+2. 
+t2
 ```{r}
-filter(table2, type=="cases")%>%
+t2_cases <- filter(table2, type=="cases")%>%
   rename(cases = count)
 
-filter(table2, type=="population")%>%
+t2_population <- filter(table2, type=="population")%>%
   rename(population = count)
 
-#table2%>%
- # mutate(rate = cases/population * 10000)
+t2_case_per_cap <- tibble(
+  year=t2_cases$year,
+  country=t2_cases$country,
+  cases=t2_cases$cases,
+  population=t2_population$population
+)%>%
+  mutate(cases_per_cap=(cases/population)*10000)
+
+t2_case_per_cap <-t2_case_per_cap%>%
+  mutate(type="cases_per_cap")%>%
+  rename(count="cases_per_cap")
+
+t2_case_per_cap
+  
+```
+
+4a+4b
+```{r}
+table4 <- tibble(
+  country=table4a$country,
+  `1999`=table4a[["1999"]]/table4b[["1999"]]*10000,
+  `2000`=table4a[["2000"]]/table4b[["2000"]]*10000
+)
+
+table4
+```
+
+3. 
+```{r}
+table2 %>%
+  filter(type=="cases")%>%
+  ggplot(aes(year, count))+
+  geom_line(aes(group=country))+
+  geom_point(aes(color=country))
 ```
