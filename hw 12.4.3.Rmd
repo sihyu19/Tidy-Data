@@ -1,0 +1,46 @@
+---
+title: "12.4.3"
+author: "siyu"
+date: "2023-02-23"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+table3
+```
+
+```{r}
+table3%>%
+  separate(rate, into = c("cases", "population"))%>%
+  separate(year, into=c("centruy", "year"), sep=2)
+```
+
+```{r}
+table5
+table5%>%
+  unite(new, century, year, sep="")
+```
+
+12.4.3 hw
+1. 
+extra() and fill() deals with extra or missing values in the table. 
+
+```{r}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"), extra = "merge")
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"), fill = "left")
+```
+
+2. 
+The remove() function removes the column before unite() or separate() commands. If remove=FALSE, the original column will be kept in the table. 
+
+```{r}
+table5%>%
+  unite(new, century, year, sep="", remove = FALSE)
+```
+
+3. 
+For separate() and extract(), you can only choose one column. But the column can be separated into many different new columns in different ways. For unite(), on the other hand, you can choose as many columns as you like, but there's only one way to combine them together. 
