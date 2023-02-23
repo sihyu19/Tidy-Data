@@ -1,0 +1,62 @@
+---
+title: "hw 12.5.1"
+author: "siyu"
+date: "2023-02-23"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+stocks <- tibble(
+  year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
+  qtr    = c(   1,    2,    3,    4,    2,    3,    4),
+  return = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66)
+)
+stocks
+```
+
+```{r}
+stocks%>%
+  pivot_wider(names_from = year, values_from = return)%>%
+  pivot_longer(
+    cols = c(`2015`, `2016`),
+    names_to = "year",
+    values_to = "return",
+    values_drop_na = TRUE
+  )
+```
+
+```{r}
+stocks%>%
+  complete(year, qtr)
+```
+
+```{r}
+treatment <- tribble(
+  ~ person,           ~ treatment, ~response,
+  "Derrick Whitmore", 1,           7,
+  NA,                 2,           10,
+  NA,                 3,           9,
+  "Katherine Burke",  1,           4
+)
+treatment
+```
+
+```{r}
+treatment%>%
+  fill(person)
+```
+
+12.5.1 HW
+1. 
+Fill() takes a set of columns where you want missing values to be replaced by the most recent non-missing value (sometimes called last observation carried forward). 
+
+Complete() takes a set of columns, and finds all unique combinations. It then ensures the original dataset contains all those values, filling in explicit NAs where necessary.
+
+Pivot_wider() makes the table wider. Instead of having R complete or fill in the blanks for you, you have to call specific values and columns and do it "manually". 
+
+2. 
+The direction argument fill() decides what value fills the N/A vale (up(), down()...). 
